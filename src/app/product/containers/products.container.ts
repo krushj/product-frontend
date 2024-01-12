@@ -3,35 +3,39 @@ import { IProduct } from '../model/product';
 import { Store } from '@ngrx/store';
 import { Observable, filter, map, startWith } from 'rxjs';
 import { productsRequestSubmit } from '../actions/products.actions';
-import { selectProducts } from '../selectors/products.selector';
+import { selectLoading, selectProducts } from '../selectors/products.selector';
 import { __removeProductRequestSubmit } from '../actions/product.actions';
-import { loadToken } from '../../auth/actions/token.actions';
 
 @Component({
   selector: 'product-container',
   template: `
-    <div class="products-container">
-      <div class="searchBar">
-        <mat-form-field>
-          <mat-label>search product</mat-label>
-          <input matInput [(ngModel)]="filterTerm" type="text" (ngModelChange)="filterProducts()"/>
-        </mat-form-field>
+      <div *ngIf="filteredProducts$" class="products-container">
+        <div class="searchBar">
+          <mat-form-field>
+            <mat-label>search product</mat-label>
+            <input
+              matInput
+              [(ngModel)]="filterTerm"
+              type="text"
+              (ngModelChange)="filterProducts()"
+            />
+          </mat-form-field>
+        </div>
+        <mat-grid-list [cols]="gridCols" rowHeight="3:2">
+          <mat-grid-tile
+            *ngFor="let product of filteredProducts$ | async"
+            style="margin: 10px;"
+          >
+            <app-product-card [cardData]="product" />
+          </mat-grid-tile>
+        </mat-grid-list>
       </div>
-      <mat-grid-list [cols]="gridCols" rowHeight="3:2">
-        <mat-grid-tile
-          *ngFor="let product of filteredProducts$ | async"
-          style="margin: 10px;"
-        >
-          <app-product-card [cardData]="product" />
-        </mat-grid-tile>
-      </mat-grid-list>
-    </div>
   `,
   styles: [
     `
       .searchBar {
         margin: 1rem;
-        display : flex;
+        display: flex;
         flex-direction: row-reverse;
       }
     `,
@@ -40,35 +44,39 @@ import { loadToken } from '../../auth/actions/token.actions';
 export class ProductsContainerComponent implements OnInit {
   gridCols!: number;
 
-  products$: Observable<IProduct[]>;
+  private products$: Observable<IProduct[]>;
   filteredProducts$: Observable<IProduct[]>;
+  loading$ : Observable<boolean>
   filterTerm: string = '';
 
   constructor(private store$: Store) {
-    this.store$.dispatch(loadToken())
     this.products$ = this.store$.select(selectProducts);
+    this.loading$ = this.store$.select(selectLoading)
+
     this.setGridCols(window.innerWidth);
     this.filteredProducts$ = this.products$; // Initialize with all products
-    this.store$.dispatch(__removeProductRequestSubmit())
+    this.store$.dispatch(__removeProductRequestSubmit());
     // Initially, start with all products
     this.filterProducts();
   }
 
   filterProducts(): void {
     this.filteredProducts$ = this.products$.pipe(
-      map(products => {
+      map((products) => {
         // If the filter term is empty, return all products
         if (this.filterTerm.trim() === '') {
           return products;
         }
 
         // Otherwise, filter products based on the title
-        return products.filter(product => product.title.toUpperCase().includes(this.filterTerm.toUpperCase()));
+        return products.filter((product) =>
+          product.title.toUpperCase().includes(this.filterTerm.toUpperCase())
+        );
       }),
       startWith([]) // Ensure the observable starts with an initial value (empty array)
     );
   }
-  
+
   ngOnInit(): void {
     this.store$.dispatch(productsRequestSubmit());
   }
@@ -82,5 +90,4 @@ export class ProductsContainerComponent implements OnInit {
     this.gridCols =
       width <= 720 ? 1 : width <= 1080 ? 2 : width <= 1440 ? 3 : 4;
   }
-
 }

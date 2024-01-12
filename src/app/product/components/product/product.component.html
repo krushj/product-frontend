@@ -1,0 +1,44 @@
+<!-- product-detail.component.html -->
+<mat-grid-list *ngIf="product" [cols]="isSmallScreen ? 1 : 2">
+  <mat-grid-tile>
+    <app-carousel [slides]="product.images"></app-carousel>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-list>
+      <div mat-subheader>Product</div>
+      <mat-list-item>
+        <mat-icon matListItemIcon>info</mat-icon>
+        <div matListItemTitle>{{ product.title }}</div>
+        <div style="display: flex; flex-wrap: wrap;" matListItemLine>{{ product.description }}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListItemIcon>money</mat-icon>
+        <div matListItemTitle>Price</div>
+        <div matListItemLine>{{ product.price | currency }}</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListItemIcon>star_rate</mat-icon>
+        <div matListItemTitle>Rating</div>
+        <div matListItemLine>{{ product.rating }}/5</div>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListItemIcon>local_grocery_store</mat-icon>
+        <div matListItemTitle>Remaining Stock</div>
+        <div matListItemLine>{{ product.stock }}</div>
+      </mat-list-item>
+      <!-- ... Other product details ... -->
+      <mat-list-item>
+        <mat-icon matListItemIcon>branding_watermark</mat-icon>
+        <div matListItemTitle>{{ product.brand }}</div>
+        <div matListItemLine>Manufacturer</div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-card-actions >
+          <button mat-raised-button color="primary" style="margin-right: 1rem;">Add to Cart</button>
+          <button mat-raised-button color="accent">Buy Now</button>
+        </mat-card-actions>
+      </mat-list-item>
+    </mat-list>
+  </mat-grid-tile>
+</mat-grid-list>

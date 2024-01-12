@@ -1,0 +1,26 @@
+<mat-card class="card-container">
+    <mat-card-header class="header-container">
+        <mat-card-subtitle class="title">{{cardData.title}}</mat-card-subtitle>
+        <mat-icon [routerLink]="['get', cardData.id]" class="more-icon" aria-hidden="false" fontIcon="open_in_new"
+            color="#4b5563" />
+    </mat-card-header>
+
+    <mat-divider />
+    <!-- <img mat-card-image [src]="cardData.images[0]"> -->
+    <mat-card-content class="card-body">
+        <div class="image-container">
+            <img mat-card-lg-image [src]="cardData.thumbnail" />
+        </div>
+        <div class="text-container">
+            <mat-card-subtitle class="product-description">{{cardData.description }}</mat-card-subtitle>
+
+            <div class="price-container">
+                <mat-divider />
+                <div>
+                    <span>{{cardData.discountPercentage}}%</span>
+                    <span>{{cardData.price | currency}}</span>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

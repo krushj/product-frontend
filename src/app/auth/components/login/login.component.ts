@@ -29,9 +29,11 @@ export class LoginComponent {
 
   constructor(private _snackBar: MatSnackBar) {}
 
+   //kminchelle
+  // 0lelplR
   form = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    username: new FormControl('kminchelle', [Validators.required]),
+    password: new FormControl('0lelplR', [Validators.required]),
   });
 
   submitForm(): void {

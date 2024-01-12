@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectTokenError } from '../selectors/form.selector';
+import { selectTokenError } from '../selectors/token.selector';
 import { getToken, loadToken } from '../actions/token.actions';
 
 @Component({

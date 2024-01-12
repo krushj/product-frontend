@@ -2,7 +2,7 @@ import { createAction, props } from "@ngrx/store";
 
 const getToken = createAction('[Token] GET', props<{username: string, password: string}>())
 const getTokenSucess = createAction('[Token] GET SUCCESS')
-const getTokenFailure = createAction('[Token] GET', props<{error: string}>())
+const getTokenFailure = createAction('[Token] GET FAILURE', props<{error: string}>())
 
 
 const loadToken = createAction('[Token] LOAD')

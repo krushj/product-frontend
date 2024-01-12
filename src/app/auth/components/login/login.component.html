@@ -1,0 +1,38 @@
+<div class="login-container">
+  <form [formGroup]="form">
+    <mat-card class="form-container">
+      <mat-card-title> Login Form </mat-card-title>
+
+      <mat-form-field appearance="outline">
+        <mat-label>username</mat-label>
+        <input
+          matInput
+          placeholder="your username"
+          formControlName="username"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="XXXXXXX"
+          formControlName="password"
+        />
+      </mat-form-field>
+
+      <p class="btn-tab">
+        <button mat-raised-button color="warn" (click)="resetForm()">
+          reset
+        </button>
+        <button mat-raised-button color="primary" (click)="submitForm()">
+          login
+        </button>
+      </p>
+      <mat-error class="error-tab">
+        {{error}}
+      </mat-error>
+    </mat-card>
+  </form>
+</div>

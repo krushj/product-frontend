@@ -1,0 +1,27 @@
+.login-container {
+  width: 100%;
+  display: flex;
+  min-height: 90vh;
+  justify-content: center;
+  align-items: center;
+  form {
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      padding: 40px 30px;
+
+      .btn-tab {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .error-tab {
+        text-align: center;
+      }
+
+      :nth-child(1) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

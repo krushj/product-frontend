@@ -28,7 +28,7 @@ export class TokenEffect {
     );
   });
 
-  
+
   loadToken$ = createEffect(() => this.actions$.pipe(
     ofType(tokenActions.loadToken),
     mergeMap(() => this.tokenService.loadToken()),
